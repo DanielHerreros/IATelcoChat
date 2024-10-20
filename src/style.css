@@ -1,8 +1,16 @@
+:root {
+  --primary-color: #4a90e2;
+  --secondary-color: #f5a623;
+  --background-color: #f0f4f8;
+  --text-color: #333;
+  --border-radius: 8px;
+}
+
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Roboto', sans-serif;
   line-height: 1.6;
-  color: #333;
-  background-color: #f0f2f5;
+  color: var(--text-color);
+  background-color: var(--background-color);
   margin: 0;
   padding: 0;
 }
@@ -12,24 +20,43 @@ body {
   margin: 2rem auto;
   padding: 2rem;
   background-color: #fff;
-  border-radius: 12px;
+  border-radius: var(--border-radius);
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-h1 {
-  text-align: center;
-  color: #1a73e8;
-  font-size: 2.5rem;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 2rem;
 }
 
+h1 {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  margin: 0;
+}
+
 h2 {
-  color: #34a853;
+  color: var(--secondary-color);
   font-size: 1.8rem;
   margin-top: 2rem;
 }
 
-.question-section, .answer-section {
+.config-btn {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.config-btn:hover {
+  background-color: darken(var(--primary-color), 10%);
+}
+
+.company-section, .query-section {
   margin-bottom: 2rem;
 }
 
@@ -38,31 +65,55 @@ select, textarea {
   padding: 0.8rem;
   margin-bottom: 1rem;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+select:focus, textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
 }
 
 button {
   width: 100%;
   padding: 0.8rem;
-  background-color: #1a73e8;
+  background-color: var(--primary-color);
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   font-size: 1rem;
   font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-  background-color: #1557b0;
+  background-color: #3a7bc0; /* Un tono más oscuro del color primario */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo específico para el botón de enviar consulta */
+#submitQueryBtn {
+  background-color: #4CAF50; /* Un color verde para destacar */
+  margin-top: 10px;
+}
+
+#submitQueryBtn:hover {
+  background-color: #45a049; /* Un tono más oscuro del verde */
 }
 
 .result-box {
   background-color: #f8f9fa;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   padding: 1rem;
   margin-top: 1rem;
   min-height: 50px;
@@ -70,101 +121,79 @@ button:hover {
   line-height: 1.4;
 }
 
-#questionDisplay {
-  font-weight: bold;
-  color: #4285f4;
-}
-
-#evaluationDisplay {
-  color: #34a853;
-}
-
-/* Estilos para el diálogo */
 dialog {
-    padding: 1rem;
-    background: #fff; /* Fondo blanco para el diálogo */
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  background: #fff;
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 dialog::backdrop {
-    background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5);
 }
 
-#openApiKeyDialogBtn {
-    display: inline-block;
-    margin-bottom: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #4285f4;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-}
-
-/* Estilos para el contenido del diálogo */
 .modal-content {
-    padding: 20px;
+  padding: 20px;
 }
 
 .modal h2 {
-    margin-top: 0;
-    color: #1a73e8; /* Color del título acorde al tema */
+  margin-top: 0;
+  color: var(--primary-color);
 }
 
 #apiKeyInput {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 10px 0 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: #f8f9fa; /* Fondo claro para el input */
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0 20px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  background-color: #f8f9fa;
 }
 
 .button-group {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .button-group button {
-    flex: 1 0 30%;
-    margin: 5px;
-    padding: 10px;
-    font-size: 14px;
-    color: #fff; /* Color del texto en los botones */
+  flex: 1 0 30%;
+  margin: 5px;
+  padding: 10px;
+  font-size: 14px;
+  color: #fff;
 }
 
 #setApiKeyBtn {
-    background-color: #34a853; /* Color verde para establecer API Key */
+  background-color: #34a853;
 }
 
 #clearApiKeyBtn {
-    background-color: #ea4335; /* Color rojo para limpiar API Key */
+  background-color: #ea4335;
 }
 
 #closeDialogBtn {
-    background-color: #fbbc05; /* Color amarillo para cerrar el diálogo */
-    color: #000; /* Color del texto en el botón de cerrar */
+  background-color: #fbbc05;
+  color: #000;
 }
 
-/* Asegúrate de que los botones tengan un buen contraste */
 .button-group button:hover {
-    opacity: 0.9; /* Efecto de hover para los botones */
+  opacity: 0.9;
 }
 
 @media (max-width: 600px) {
   .container {
-      margin: 1rem;
-      padding: 1rem;
+    margin: 1rem;
+    padding: 1rem;
   }
 
   h1 {
-      font-size: 2rem;
+    font-size: 2rem;
   }
 
   h2 {
-      font-size: 1.5rem;
+    font-size: 1.5rem;
   }
 }

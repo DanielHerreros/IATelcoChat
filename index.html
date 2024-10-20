@@ -3,65 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Preguntas y Evaluador</title>
+    <title>Consultor de Servicios de Telefonía</title>
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <!-- Añadir la biblioteca marked para renderizar Markdown -->
-   
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- Mantener la biblioteca marked para renderizar Markdown si es necesario -->
 </head>
 <body>
     <div class="container">
-        <h1>Generador de Preguntas y Evaluador</h1>
+        <header>
+            <h1><i class="fas fa-mobile-alt"></i> Consultor de Servicios de Telefonía</h1>
+            <a href="#" id="openApiKeyDialogBtn" class="config-btn"><i class="fas fa-cog"></i> Configurar API Key</a>
+        </header>
         
-        <!-- Cambiamos el botón a un enlace para evitar problemas de eventos -->
-        <a href="#" id="openApiKeyDialogBtn">Configurar API Key</a>
+        <main>
+            <section class="company-section">
+                <h2><i class="fas fa-building"></i> Selecciona una Compañía</h2>
+                <select id="companySelect">
+                    <option value="masmovil">MasMovil</option>
+                    <option value="simyo">Simyo</option>
+                    <option value="O2">O2</option>
+                    <option value="redit">Redit</option>
+                    <!-- Añade más compañías según sea necesario -->
+                </select>
+            </section>
 
-        <div class="question-section">
-            <h2>Generar Pregunta</h2>
-            <select id="questionType">
-                <option value="matemáticas">Matemáticas</option>
-                <option value="ciencias">Ciencias</option>
-                <option value="historia">Historia</option>
-                <option value="literatura">Literatura</option>
-            </select>
-            <select id="questionFormat">
-                <option value="test">Test</option>
-                <option value="desarrollo">Desarrollo</option>
-                <option value="desmentir">Desmentir Afirmación</option>
-            </select>
-            <select id="difficultyLevel">
-                <option value="fácil">Fácil</option>
-                <option value="medio">Medio</option>
-                <option value="difícil">Difícil</option>
-            </select>
-            <select id="educationLevel">
-                <option value="primaria">Primaria</option>
-                <option value="secundaria">Secundaria</option>
-                <option value="universitario">Universitario</option>
-            </select>
-            <button id="generateBtn">Generar Pregunta</button>
-            <div id="questionDisplay" class="result-box markdown-content"></div>
-        </div>
+            <section class="query-section">
+                <h2><i class="fas fa-question-circle"></i> Tu Consulta</h2>
+                <textarea id="queryInput" rows="4" placeholder="Escribe tu consulta sobre la compañía aquí..."></textarea>
+                <button id="submitQueryBtn"><i class="fas fa-paper-plane"></i> Enviar Consulta</button>
+                <div id="responseDisplay" class="result-box markdown-content"></div>
+            </section>
+        </main>
 
-        <div class="answer-section">
-            <h2>Tu Respuesta</h2>
-            <textarea id="answerInput" rows="4" placeholder="Escribe tu respuesta aquí..."></textarea>
-            <button id="evaluateBtn">Evaluar Respuesta</button>
-            <div id="evaluationDisplay" class="result-box markdown-content"></div>
-        </div>
-
-        <!-- Reemplazamos el div por un dialog -->
         <dialog id="apiKeyDialog" class="modal">
             <div class="modal-content">
-                <h2>Establecer API Key</h2>
+                <h2><i class="fas fa-key"></i> Establecer API Key</h2>
                 <input type="text" id="apiKeyInput" placeholder="Introduce tu API Key" />
                 <div class="button-group">
-                    <button id="setApiKeyBtn">Establecer API Key</button>
-                    <button id="clearApiKeyBtn">Limpiar API Key</button>
-                    <button id="closeDialogBtn">Cerrar</button>
+                    <button id="setApiKeyBtn"><i class="fas fa-check"></i> Establecer</button>
+                    <button id="clearApiKeyBtn"><i class="fas fa-trash"></i> Limpiar</button>
+                    <button id="closeDialogBtn"><i class="fas fa-times"></i> Cerrar</button>
                 </div>
             </div>
         </dialog>
-
     </div>
 
     <script type="module" src="/src/main.ts"></script>
