@@ -17,6 +17,9 @@ function initApp() {
   const queryInput = document.getElementById('queryInput') as HTMLTextAreaElement;
   const submitQueryBtn = document.getElementById('submitQueryBtn') as HTMLButtonElement;
   const responseDisplay = document.getElementById('responseDisplay') as HTMLDivElement;
+  const themeToggleBtn = document.getElementById('themeToggleBtn') as HTMLButtonElement;
+  const body = document.body;
+  const icon = themeToggleBtn.querySelector('i');
 
   // Evento para abrir el diálogo de API Key
   openApiKeyDialogBtn.addEventListener('click', () => {
@@ -58,6 +61,28 @@ function initApp() {
       responseDisplay.textContent = 'Hubo un error al procesar tu consulta. Por favor, intenta de nuevo.';
     }
   });
+
+  // Función para cambiar el tema
+  function toggleTheme() {
+    body.classList.toggle('dark-mode');
+    if (body.classList.contains('dark-mode')) {
+      icon?.classList.replace('fa-sun', 'fa-moon');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      icon?.classList.replace('fa-moon', 'fa-sun');
+      localStorage.setItem('theme', 'light');
+    }
+  }
+
+  // Evento para cambiar el tema
+  themeToggleBtn.addEventListener('click', toggleTheme);
+
+  // Comprobar el tema guardado al cargar la página
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    body.classList.add('dark-mode');
+    icon?.classList.replace('fa-sun', 'fa-moon');
+  }
 }
 
 // Función para enviar la consulta a la API de OpenAI

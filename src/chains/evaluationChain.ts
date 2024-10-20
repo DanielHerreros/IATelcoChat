@@ -8,16 +8,7 @@ export const createEvaluationChain = (groq_api_key: string) => {
     model: "llama-3.1-8b-instant",
   });
 
-  const template = `Evalúa la siguiente respuesta del estudiante a la pregunta dada. 
-  Proporciona una puntuación del 0 al 10 y una explicación detallada de la evaluación.
-  Ten en cuenta que la pregunta es de dificultad {difficulty} para un nivel educativo {level}.
-  Utiliza formato Markdown para estructurar tu respuesta.
-
-  Pregunta: {question}
-
-  Respuesta del estudiante: {answer}
-
-  Evaluación (en Markdown):`;
+  const template = `Revisa la compñaia que ha seleccionado el usuario y su pregunta y busca la respuesta en la documentación de la compañia`;
 
   const chatPrompt = ChatPromptTemplate.fromMessages<{ question: string; answer: string; format: string; difficulty: string; level: string }>([
     ["system", template],

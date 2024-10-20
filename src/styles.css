@@ -1,0 +1,42 @@
+/* Estilos base */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --primary-color: #4a90e2;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Estilos para el modo oscuro */
+body.dark-mode {
+    --bg-color: #333333;
+    --text-color: #ffffff;
+    --primary-color: #64b5f6;
+}
+
+/* Estilos para el botón de cambio de tema */
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.theme-toggle-btn:hover {
+    background-color: rgba(128, 128, 128, 0.2);
+}
+
+/* Ajuste para los botones en el encabezado */
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
