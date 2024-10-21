@@ -9,44 +9,53 @@ interface ApiResponse {
 
 // Función para inicializar la aplicación
 function initApp() {
-  const apiKeyDialog = document.getElementById('apiKeyDialog') as HTMLDialogElement;
-  const openApiKeyDialogBtn = document.getElementById('openApiKeyDialogBtn') as HTMLAnchorElement;
-  const saveApiKeyBtn = document.getElementById('saveApiKeyBtn') as HTMLButtonElement;
-  const apiKeyInput = document.getElementById('apiKeyInput') as HTMLInputElement;
-  const companySelect = document.getElementById('companySelect') as HTMLSelectElement;
-  const queryInput = document.getElementById('queryInput') as HTMLTextAreaElement;
-  const submitQueryBtn = document.getElementById('submitQueryBtn') as HTMLButtonElement;
-  const responseDisplay = document.getElementById('responseDisplay') as HTMLDivElement;
-  const themeToggleBtn = document.getElementById('themeToggleBtn') as HTMLButtonElement;
-  const body = document.body;
-  const icon = themeToggleBtn.querySelector('i');
+  const elements = {
+    apiKeyDialog: document.getElementById('apiKeyDialog') as HTMLDialogElement | null,
+    openApiKeyDialogBtn: document.getElementById('openApiKeyDialogBtn') as HTMLAnchorElement | null,
+    saveApiKeyBtn: document.getElementById('saveApiKeyBtn') as HTMLButtonElement | null,
+    apiKeyInput: document.getElementById('apiKeyInput') as HTMLInputElement | null,
+    companySelect: document.getElementById('companySelect') as HTMLSelectElement | null,
+    queryInput: document.getElementById('queryInput') as HTMLTextAreaElement | null,
+    submitQueryBtn: document.getElementById('submitQueryBtn') as HTMLButtonElement | null,
+    responseDisplay: document.getElementById('responseDisplay') as HTMLDivElement | null,
+    themeToggleBtn: document.getElementById('themeToggleBtn') as HTMLButtonElement | null
+  };
+
+  const missingElements = Object.entries(elements)
+    .filter(([_, element]) => element === null)
+    .map(([name]) => name);
+
+  if (missingElements.length > 0) {
+    console.error('No se pudieron encontrar los siguientes elementos en el DOM:', missingElements);
+    return;
+  }
 
   // Evento para abrir el diálogo de API Key
-  openApiKeyDialogBtn.addEventListener('click', () => {
-    apiKeyDialog.showModal();
+  elements.openApiKeyDialogBtn.addEventListener('click', () => {
+    elements.apiKeyDialog.showModal();
   });
 
   // Evento para guardar la API Key
-  saveApiKeyBtn.addEventListener('click', () => {
-    const apiKey = apiKeyInput.value.trim();
+  elements.saveApiKeyBtn.addEventListener('click', () => {
+    const apiKey = elements.apiKeyInput.value.trim();
     if (apiKey) {
       localStorage.setItem('openai_api_key', apiKey);
-      apiKeyDialog.close();
+      elements.apiKeyDialog.close();
     } else {
       alert('Por favor, introduce una API Key válida.');
     }
   });
 
   // Evento para enviar una consulta
-  submitQueryBtn.addEventListener('click', async () => {
+  elements.submitQueryBtn.addEventListener('click', async () => {
     const apiKey = localStorage.getItem('openai_api_key');
     if (!apiKey) {
       alert('Por favor, configura tu API Key primero.');
       return;
     }
 
-    const company = companySelect.value;
-    const query = queryInput.value.trim();
+    const company = elements.companySelect.value;
+    const query = elements.queryInput.value.trim();
     if (!query) {
       alert('Por favor, escribe una consulta.');
       return;
@@ -55,33 +64,27 @@ function initApp() {
     try {
       const response = await sendQuery(apiKey, company, query);
       const markedContent = await Promise.resolve(marked(response.content));
-      responseDisplay.innerHTML = markedContent;
+      elements.responseDisplay.innerHTML = markedContent;
     } catch (error) {
       console.error('Error al enviar la consulta:', error);
-      responseDisplay.textContent = 'Hubo un error al procesar tu consulta. Por favor, intenta de nuevo.';
+      elements.responseDisplay.textContent = 'Hubo un error al procesar tu consulta. Por favor, intenta de nuevo.';
     }
   });
 
   // Función para cambiar el tema
-  function toggleTheme() {
-    body.classList.toggle('dark-mode');
-    if (body.classList.contains('dark-mode')) {
-      icon?.classList.replace('fa-sun', 'fa-moon');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      icon?.classList.replace('fa-moon', 'fa-sun');
-      localStorage.setItem('theme', 'light');
+  elements.themeToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const icon = elements.themeToggleBtn.querySelector('i');
+    if (icon) {
+      icon.classList.toggle('fa-sun');
+      icon.classList.toggle('fa-moon');
     }
-  }
-
-  // Evento para cambiar el tema
-  themeToggleBtn.addEventListener('click', toggleTheme);
+  });
 
   // Comprobar el tema guardado al cargar la página
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === 'dark') {
-    body.classList.add('dark-mode');
-    icon?.classList.replace('fa-sun', 'fa-moon');
+    document.body.classList.add('dark-mode');
   }
 }
 

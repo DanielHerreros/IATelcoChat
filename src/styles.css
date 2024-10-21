@@ -3,6 +3,9 @@
     --bg-color: #ffffff;
     --text-color: #333333;
     --primary-color: #4a90e2;
+    --button-bg: #f0f0f0;
+    --button-text: #333333;
+    --container-color: #f1f1f1;
 }
 
 body {
@@ -13,25 +16,57 @@ body {
 
 /* Estilos para el modo oscuro */
 body.dark-mode {
-    --bg-color: #333333;
+    --bg-color: #1a1a1a; /* Un gris muy oscuro para el fondo */
     --text-color: #ffffff;
     --primary-color: #64b5f6;
+    --button-bg: #333333;
+    --button-text: #ffffff;
+    --container-color: #2a2a2a; /* Un gris más claro para el contenedor */
+}
+
+/* Asegúrate de que el contenedor principal use la variable de color */
+.container {
+    background-color: var(--container-color);
+    transition: background-color 0.3s;
+}
+
+button, .config-btn {
+    background-color: var(--button-bg);
+    color: var(--button-text);
 }
 
 /* Estilos para el botón de cambio de tema */
 .theme-toggle-btn {
-    background: none;
-    border: none;
-    color: var(--text-color);
-    font-size: 1.5rem;
+    background: var(--button-bg);
+    color: var(--button-text);
+    font-size: 0.8rem;
     cursor: pointer;
     padding: 5px;
     border-radius: 50%;
-    transition: background-color 0.3s;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .theme-toggle-btn:hover {
-    background-color: rgba(128, 128, 128, 0.2);
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+}
+
+/* Ajustes adicionales para otros elementos si es necesario */
+textarea, select {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+}
+
+#responseDisplay {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
 }
 
 /* Ajuste para los botones en el encabezado */
