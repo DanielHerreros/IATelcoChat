@@ -31,50 +31,50 @@ function initApp() {
   }
 
   // Evento para abrir el diálogo de API Key
-  elements.openApiKeyDialogBtn.addEventListener('click', () => {
-    elements.apiKeyDialog.showModal();
+  elements.openApiKeyDialogBtn?.addEventListener('click', () => {
+    elements.apiKeyDialog?.showModal();
   });
 
   // Evento para guardar la API Key
-  elements.saveApiKeyBtn.addEventListener('click', () => {
-    const apiKey = elements.apiKeyInput.value.trim();
+  elements.saveApiKeyBtn?.addEventListener('click', () => {
+    const apiKey = elements.apiKeyInput?.value.trim();
     if (apiKey) {
       localStorage.setItem('openai_api_key', apiKey);
-      elements.apiKeyDialog.close();
+      elements.apiKeyDialog?.close();
     } else {
       alert('Por favor, introduce una API Key válida.');
     }
   });
 
   // Evento para enviar una consulta
-  elements.submitQueryBtn.addEventListener('click', async () => {
+  elements.submitQueryBtn?.addEventListener('click', async () => {
     const apiKey = localStorage.getItem('openai_api_key');
     if (!apiKey) {
       alert('Por favor, configura tu API Key primero.');
       return;
     }
-
-    const company = elements.companySelect.value;
-    const query = elements.queryInput.value.trim();
+    const company = elements.companySelect?.value;
+    const query = elements.queryInput?.value.trim();
     if (!query) {
       alert('Por favor, escribe una consulta.');
       return;
     }
-
     try {
-      const response = await sendQuery(apiKey, company, query);
+      const response = await sendQuery(apiKey!, company!, query);
       const markedContent = await Promise.resolve(marked(response.content));
-      elements.responseDisplay.innerHTML = markedContent;
+      elements.responseDisplay!.innerHTML = markedContent;
     } catch (error) {
       console.error('Error al enviar la consulta:', error);
-      elements.responseDisplay.textContent = 'Hubo un error al procesar tu consulta. Por favor, intenta de nuevo.';
+      if (elements.responseDisplay) {
+        elements.responseDisplay.textContent = 'Hubo un error al procesar tu consulta. Por favor, intenta de nuevo.';
+      }
     }
   });
 
   // Función para cambiar el tema
-  elements.themeToggleBtn.addEventListener('click', () => {
+  elements.themeToggleBtn?.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
-    const icon = elements.themeToggleBtn.querySelector('i');
+    const icon = elements.themeToggleBtn?.querySelector('i');
     if (icon) {
       icon.classList.toggle('fa-sun');
       icon.classList.toggle('fa-moon');
